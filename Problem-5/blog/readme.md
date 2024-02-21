@@ -1,5 +1,6 @@
 # blog
 **blog** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
+(This repo follow the tutorial on Ignite website.)
 
 ## Get started
 
@@ -9,43 +10,38 @@ ignite chain serve
 
 `serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
 
-### Configure
+### Users
+Currently there are two users, alice and bob (as provided in the tutorial).
 
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
+### Create a blog post
 
-### Web Frontend
+`blogd tx blog create-post {title} {body} --from {user} --chain-id blog`
 
-Additionally, Ignite CLI offers both Vue and React options for frontend scaffolding:
+Creates a blog post with title {title}, body {body}, by user {user}.
+E.g. blogd tx blog create-post hello world --from alice --chain-id blog
 
-For a Vue frontend, use: `ignite scaffold vue`
-For a React frontend, use: `ignite scaffold react`
-These commands can be run within your scaffolded blockchain project. 
+### List all blog posts
 
+`blogd q blog list-post`
 
-For more information see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
+### Show a speciifc blog posts
 
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
+`blogd q blog show-post {id}`
 
-```
-git tag v0.1
-git push origin v0.1
-```
+Shows the blog post with id {id}.
 
-After a draft release is created, make your final changes from the release page and publish it.
+### Update blog posts
 
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
+`blogd tx blog update-post {title} {bodt} {blog-post-id} --from alice --chain-id blog`
 
-```
-curl https://get.ignite.com/username/blog@latest! | sudo bash
-```
-`username/blog` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
+Updates the blog post of id {blog-post-id}, with the new title {title} and body {body}.
 
-## Learn more
+E.g. `blogd tx blog update-post hello cosmos 0 --from alice --chain-id blog`
 
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
+### Delete a blog post
+
+`blogd tx blog delete-post {id} --from {user} --chain-id blog`
+
+Deletes blog with id {id} from user {user}. Take note that only the owner can delete his/her own post. 
+
+E.g `blogd tx blog delete-post 0 --from alice --chain-id blog` is allowed because post 0 is created by alice, but bob cannot delete post 0.
