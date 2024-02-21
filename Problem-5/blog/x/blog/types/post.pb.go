@@ -23,8 +23,8 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Post struct {
-	Title   string `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
-	Body    string `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
+	Title   string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Body    string `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
 	Creator string `protobuf:"bytes,3,opt,name=creator,proto3" json:"creator,omitempty"`
 	Id      uint64 `protobuf:"varint,4,opt,name=id,proto3" json:"id,omitempty"`
 }
@@ -101,14 +101,14 @@ var fileDescriptor_8f060607f92e3b72 = []byte{
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x49, 0xca, 0xc9, 0x4f,
 	0xd7, 0x07, 0x13, 0x05, 0xf9, 0xc5, 0x25, 0x7a, 0x05, 0x45, 0xf9, 0x25, 0xf9, 0x42, 0x9c, 0x20,
 	0x01, 0x3d, 0x10, 0xa1, 0x14, 0xc5, 0xc5, 0x12, 0x90, 0x5f, 0x5c, 0x22, 0x24, 0xc2, 0xc5, 0x5a,
-	0x92, 0x59, 0x92, 0x93, 0x2a, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x19, 0x04, 0xe1, 0x08, 0x09, 0x71,
-	0xb1, 0x24, 0xe5, 0xa7, 0x54, 0x4a, 0x30, 0x81, 0x05, 0xc1, 0x6c, 0x21, 0x09, 0x2e, 0xf6, 0xe4,
+	0x92, 0x59, 0x92, 0x93, 0x2a, 0xc1, 0xa4, 0xc0, 0xa8, 0xc1, 0x19, 0x04, 0xe1, 0x08, 0x09, 0x71,
+	0xb1, 0x24, 0xe5, 0xa7, 0x54, 0x4a, 0x30, 0x82, 0x05, 0xc1, 0x6c, 0x21, 0x09, 0x2e, 0xf6, 0xe4,
 	0xa2, 0xd4, 0xc4, 0x92, 0xfc, 0x22, 0x09, 0x66, 0xb0, 0x30, 0x8c, 0x2b, 0xc4, 0xc7, 0xc5, 0x94,
 	0x99, 0x22, 0xc1, 0xa2, 0xc0, 0xa8, 0xc1, 0x12, 0xc4, 0x94, 0x99, 0xe2, 0xa4, 0x7d, 0xe2, 0x91,
 	0x1c, 0xe3, 0x85, 0x47, 0x72, 0x8c, 0x0f, 0x1e, 0xc9, 0x31, 0x4e, 0x78, 0x2c, 0xc7, 0x70, 0xe1,
 	0xb1, 0x1c, 0xc3, 0x8d, 0xc7, 0x72, 0x0c, 0x51, 0x82, 0x60, 0x17, 0x55, 0x40, 0x1c, 0x56, 0x52,
-	0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0x76, 0x9a, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xfa, 0xbd,
-	0x65, 0x52, 0xb2, 0x00, 0x00, 0x00,
+	0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0x76, 0x9a, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xfd, 0x05,
+	0xf1, 0x1d, 0xb2, 0x00, 0x00, 0x00,
 }
 
 func (m *Post) Marshal() (dAtA []byte, err error) {
@@ -143,17 +143,17 @@ func (m *Post) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.Body) > 0 {
-		i -= len(m.Body)
-		copy(dAtA[i:], m.Body)
-		i = encodeVarintPost(dAtA, i, uint64(len(m.Body)))
-		i--
-		dAtA[i] = 0x12
-	}
 	if len(m.Title) > 0 {
 		i -= len(m.Title)
 		copy(dAtA[i:], m.Title)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Title)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Body) > 0 {
+		i -= len(m.Body)
+		copy(dAtA[i:], m.Body)
+		i = encodeVarintPost(dAtA, i, uint64(len(m.Body)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -177,11 +177,11 @@ func (m *Post) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Title)
+	l = len(m.Body)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
 	}
-	l = len(m.Body)
+	l = len(m.Title)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
 	}
@@ -232,38 +232,6 @@ func (m *Post) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPost
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPost
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPost
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Title = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Body", wireType)
 			}
 			var stringLen uint64
@@ -293,6 +261,38 @@ func (m *Post) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Body = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPost
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPost
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPost
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Title = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
